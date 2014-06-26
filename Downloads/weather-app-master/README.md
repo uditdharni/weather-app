@@ -16,4 +16,4 @@ A simple weather application using data from the [OpenWeatherMap](http://openwea
 
 ##Author
 
-Application developed by [Udit Dharni](https://twitter.com/simonbingham).
+Application developed by [Udit Dharni]
