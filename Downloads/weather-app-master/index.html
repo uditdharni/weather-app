@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html class="no-js">
+	<head>
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/main.css">
+
+		<script src="js/modernizr.custom.10824.js"></script>
+		<script src="js/angular.min.js"></script>
+		<script src="js/weather-app/app.js"></script>
+		<script src="js/weather-app/controllers/mainController.js"></script>
+	</head>
+
+	<body>
+		<main ng-app="WeatherApp" ng-controller="mainController" ng-init="init()">
+
+			<div class="hide-on-no-js">
+				<!-- search form -->
+				<form ng-repeat ="city in cityCollection" ng-submit ="submit(loc)" >
+					<input type="text" placeholder="Enter town or city" ng-model="loc">
+				    <button ng-click = "submit(loc)"> Check</button>
+                </form>
+				    <button ng-click = "addMore()"> See More</button>
+
+				<!-- weather report --->
+				<article ng-show="status == 200 && data.cod == 200">
+					<h2>
+						{{data.name}} {{data.sys.country}}
+						<img ng-src="{{img}}" alt=" " class="pull-right">
+					</h2>
+
+					<table ng-repeat="detail in cityDetails">
+						<tbody>
+                           <tr>
+                               <th> Day</th>
+                               <th>Weather</th>
+                               <th>Temperature</th>
+                           </tr>
+							<tr>
+                                <td> {{$index}} </td>
+								<td>{{detail.weather[0]['main']}}</td>
+								<td>{{detail.main.temp | customKelvinToCelsiusFilter | number:2}}&deg;C</td>
+							</tr>
+						</tbody>
+					</table>
+				</article>
+
+				<!-- location not found error message --->
+				<article ng-show="status == 200 && data.cod == 404">
+					<div class="alert alert-danger">{{data.message}}</div>
+				</article>			
+
+				<!-- failed ajax request error message --->
+				<article ng-show="status == 0">
+					<div class="alert alert-danger">{{data}}</div>
+				</article>
+
+			</div>
+		</main>
+	</body>
+</html>
